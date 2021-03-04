@@ -17,15 +17,20 @@ const cors = require("cors");
 
 const server = express();
 
+const UserRouter = require("./users/users-router");
+
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
+
+server.use("/api/users", UserRouter);
 
 server.get("/", (req, res) => {
   res.json({ api: "up" });
 });
 
-server.use((err, req, res, next) => { // eslint-disable-line
+server.use((err, req, res, next) => {
+  // eslint-disable-line
   res.status(500).json({
     message: err.message,
     stack: err.stack,
